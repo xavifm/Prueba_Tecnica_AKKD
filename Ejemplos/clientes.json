@@ -1,0 +1,42 @@
+[
+  {
+    "dni": "12345678A",
+    "nombre": "Joan",
+    "apellidos": "Garcia Pérez",
+    "email": "joan.garcia@email.com",
+    "telefono": "612345678",
+    "fechaNacimiento": "1990-05-14"
+  },
+  {
+    "dni": "87654321B",
+    "nombre": "Maria",
+    "apellidos": "López Sánchez",
+    "email": "maria.lopez@email.com",
+    "telefono": "612345679",
+    "fechaNacimiento": "1987-11-22"
+  },
+  {
+    "dni": "11223344C",
+    "nombre": "Carlos",
+    "apellidos": "Martínez Ruiz",
+    "email": "carlos.martinez@email.com",
+    "telefono": "911222333",
+    "fechaNacimiento": "1995-03-08"
+  },
+  {
+    "dni": "44332211D",
+    "nombre": "Laura",
+    "apellidos": "Fernández Gómez",
+    "email": "laura.fernandez@email.com",
+    "telefono": "933445566",
+    "fechaNacimiento": "1992-09-30"
+  },
+  {
+    "dni": "55667788E",
+    "nombre": "David",
+    "apellidos": "Torres Jiménez",
+    "email": "david.torres@email.com",
+    "telefono": "698765432",
+    "fechaNacimiento": "1984-01-17"
+  }
+]
