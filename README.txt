@@ -55,7 +55,7 @@ Siguiendo el enunciado, se ha optado por trabajar con ficheros en lugar de base 
 
 Se ha incluido una carpeta llamada `Ejemplos` que contiene:
 
-* `clientes.csv` → fichero de ejemplo para importación
-* `clientes.json` → fichero de ejemplo con datos
+* `clientes.csv`
+* `clientes.json`
 
 Estos archivos permiten probar fácilmente la funcionalidad de ambas aplicaciones
