@@ -5,6 +5,17 @@ namespace PruebaTecnica_Akkodis_2.CrossCutting.Validator
 {
     public static class ClienteValidator
     {
+        /// <summary>
+        /// Valida un objeto cliente comprobando que sus campos cumplan
+        /// las reglas básicas de formato y consistencia.
+        /// </summary>
+        /// <param name="cliente">Cliente a validar.</param>
+        /// <param name="error">
+        /// Mensaje descriptivo del error encontrado en caso de validación fallida.
+        /// </param>
+        /// <returns>
+        /// True si el cliente es válido; en caso contrario, false.
+        /// </returns>
         public static bool Validate(Cliente cliente, out string error)
         {
             if (cliente == null)
@@ -41,6 +52,13 @@ namespace PruebaTecnica_Akkodis_2.CrossCutting.Validator
             return true;
         }
 
+        /// <summary>
+        /// Comprueba si el email proporcionado tiene un formato válido.
+        /// </summary>
+        /// <param name="email">Dirección de correo electrónico a validar.</param>
+        /// <returns>
+        /// True si el formato del email es válido; en caso contrario, false.
+        /// </returns>
         private static bool IsValidEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
@@ -57,6 +75,14 @@ namespace PruebaTecnica_Akkodis_2.CrossCutting.Validator
             }
         }
 
+        /// <summary>
+        /// Comprueba si el número de teléfono contiene únicamente dígitos
+        /// y cumple una longitud razonable.
+        /// </summary>
+        /// <param name="telefono">Número de teléfono a validar.</param>
+        /// <returns>
+        /// True si el teléfono es válido; en caso contrario, false.
+        /// </returns>
         private static bool IsValidPhone(string telefono)
         {
             if (string.IsNullOrWhiteSpace(telefono))
