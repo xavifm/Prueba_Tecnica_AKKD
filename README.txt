@@ -36,6 +36,8 @@ Se ha desarrollado una API REST que permite gestionar clientes mediante endpoint
 * `POST /database/clientes` → Crea un nuevo cliente
 * `DELETE /database/clientes/{dni}` → Elimina un cliente
 
+*AVISO!!!!! De base de datos se genera un json llamado clientes_store, copia el ejemplo de json y lo enganchas cuando el fichero se haya generado*
+
 ---
 
 ## 📂 Gestión de datos
