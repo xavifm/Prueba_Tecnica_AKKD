@@ -1,0 +1,6 @@
+@PruebaTecnica_Akkodis_2_HostAddress = http://localhost:5007
+
+GET {{PruebaTecnica_Akkodis_2_HostAddress}}/databaseController/
+Accept: application/json
+
+###
