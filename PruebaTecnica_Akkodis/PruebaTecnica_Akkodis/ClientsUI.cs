@@ -17,11 +17,23 @@ namespace PruebaTecnica_Akkodis
     {
         private string FileRoute = "";
 
+        /// <summary>
+        /// Inicializa una nueva instancia del formulario principal de gestión de clientes.
+        /// </summary>
         public ClientsUI()
         {
             InitializeComponent();
         }
 
+
+        /// <summary>
+        /// Se ejecuta al cargar el formulario.
+        /// Comprueba si existe el fichero de persistencia local y, en caso contrario, lo crea
+        /// con la cabecera correspondiente. Después carga automáticamente los datos en la interfaz.
+        /// </summary>
+        /// <param name="sender">Objeto que lanza el evento.</param>
+        /// <param name="e">Datos asociados al evento de carga.</param>
+        /// <returns>No devuelve ningún valor.</returns>
         private void ClientsUI_Load(object sender, EventArgs e)
         {
             string persistedFile = System.IO.Path.Combine(Application.StartupPath, "clientes_store.csv");
@@ -36,6 +48,13 @@ namespace PruebaTecnica_Akkodis
             Estado.Text = "Datos cargados automáticamente";
         }
 
+        /// <summary>
+        /// Abre una ventana de selección de fichero para importar clientes
+        /// en el formato actualmente seleccionado en la interfaz.
+        /// </summary>
+        /// <param name="sender">Objeto que lanza el evento.</param>
+        /// <param name="e">Datos asociados al evento de clic.</param>
+        /// <returns>No devuelve ningún valor.</returns>
         private void Import_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -53,14 +72,36 @@ namespace PruebaTecnica_Akkodis
             }
         }
 
+        /// <summary>
+        /// Cambia el formato de trabajo seleccionado entre CSV y JSON.
+        /// </summary>
+        /// <param name="sender">Objeto que lanza el evento.</param>
+        /// <param name="e">Datos asociados al evento de clic.</param>
+        /// <returns>No devuelve ningún valor.</returns>
         private void Format_Click(object sender, EventArgs e)
         {
             Format.Text = Format.Text == "CSV" ? "JSON" : "CSV";
         }
 
+        /// <summary>
+        /// Obtiene el factory correspondiente del formato indicado.
+        /// </summary>
+        /// <param name="format">Formato de fichero a utilizar. Puede ser CSV o JSON.</param>
+        /// <returns>
+        /// Una instancia de <see cref="IClienteFactory"/> compatible con el formato indicado,
+        /// o null si el formato no está soportado.
+        /// </returns>
         private IClienteFactory LoadFactory(string format)
         {
             IClienteFactory importer = null;
+
+            string extension = System.IO.Path.GetExtension(FileRoute)?.ToLower();
+
+            if ((format == "CSV" && extension != ".csv") || (format == "JSON" && extension != ".json"))
+            {
+                MessageBox.Show("El formato seleccionado no coincide con la extensión del fichero.", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
 
             switch (format)
             {
@@ -75,6 +116,12 @@ namespace PruebaTecnica_Akkodis
             return importer;
         }
 
+        /// <summary>
+        /// Carga los datos de clientes desde el fichero indicado y los muestra en la interfaz.
+        /// Utiliza el importador correspondiente según el formato seleccionado (CSV o JSON).
+        /// </summary>
+        /// <param name="fileRoute">Ruta del fichero desde el que se cargarán los datos.</param>
+        /// <returns>No devuelve ningún valor.</returns>
         private void LoadData(string fileRoute)
         {
             IClienteFactory importer = LoadFactory(Format.Text);
@@ -90,6 +137,14 @@ namespace PruebaTecnica_Akkodis
             }
         }
 
+        /// <summary>
+        /// Valida todos los clientes recibidos comprobando que sus datos cumplan
+        /// las reglas básicas definidas por la aplicación.
+        /// </summary>
+        /// <param name="clientes">Lista de clientes a validar.</param>
+        /// <returns>
+        /// True si todos los clientes son válidos; en caso contrario, false.
+        /// </returns>
         private bool ValidateAllFields(List<Cliente> clientes)
         {
             bool query = true;
@@ -108,6 +163,12 @@ namespace PruebaTecnica_Akkodis
             return query;
         }
 
+        /// <summary>
+        /// Guarda en el fichero de persistencia los datos actualmente mostrados en la tabla.
+        /// Primero elimina los registros existentes y posteriormente inserta los nuevos datos validados.
+        /// </summary>
+        /// <param name="fileRoute">Ruta del fichero donde se guardarán los datos.</param>
+        /// <returns>No devuelve ningún valor.</returns>
         private void Save(string fileRoute)
         {
             IClienteFactory importer = LoadFactory(Format.Text);
@@ -135,6 +196,14 @@ namespace PruebaTecnica_Akkodis
             FillInfo(importer.Import(FileRoute));
         }
 
+        /// <summary>
+        /// Obtiene la lista de clientes a partir de los datos actualmente visibles
+        /// en la rejilla de la interfaz.
+        /// </summary>
+        /// <returns>
+        /// Una lista de objetos <see cref="Cliente"/> generada a partir del contenido
+        /// actual del DataGridView.
+        /// </returns>
         private List<Cliente> GetClientesFromGrid()
         {
             List<Cliente> list = new List<Cliente>();
@@ -158,6 +227,12 @@ namespace PruebaTecnica_Akkodis
             return list;
         }
 
+        /// <summary>
+        /// Rellena la tabla de la interfaz con la lista de clientes proporcionada,
+        /// actualizando además la barra de progreso y los indicadores de estado.
+        /// </summary>
+        /// <param name="info">Lista de clientes a mostrar en la tabla.</param>
+        /// <returns>No devuelve ningún valor.</returns>
         private void FillInfo(List<Cliente> info)
         {
             dataGridView1.Rows.Clear();
@@ -186,11 +261,22 @@ namespace PruebaTecnica_Akkodis
             Estado.Text = "Datos cargados";
         }
 
+        /// <summary>
+        /// Guarda manualmente los datos actuales de la rejilla en el fichero.
+        /// </summary>
+        /// <param name="sender">Objeto que lanza el evento.</param>
+        /// <returns>No devuelve ningún valor.</returns>
         private void SaveButton_Click(object sender, EventArgs e)
         {
             Save(FileRoute);
         }
 
+        /// <summary>
+        /// Recarga los datos desde el fichero actual y actualiza la tabla de la interfaz
+        /// con la información más reciente almacenada.
+        /// </summary>
+        /// <param name="sender">Objeto que lanza el evento.</param>
+        /// <returns>No devuelve ningún valor.</returns>
         private void Refresh_Click(object sender, EventArgs e)
         {
             IClienteFactory importer = LoadFactory(Format.Text);
