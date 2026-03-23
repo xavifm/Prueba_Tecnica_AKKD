@@ -18,7 +18,8 @@ Se ha desarrollado una aplicación de escritorio que permite la gestión de clie
 ### Funcionalidades principales:
 
 * Visualización de clientes
-* Alta de nuevos clientes
+* Alta de nuevos clients
+* Modificación de clientes
 * Eliminación de clientes
 * Importación de datos desde fichero
 
